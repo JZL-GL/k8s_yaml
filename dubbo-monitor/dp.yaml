@@ -1,30 +1,29 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: dubbo-demo-service
-  namespace: app
+  name: dubbo-monitor
+  namespace: infra
   labels: 
-    name: dubbo-demo-service
+    name: dubbo-monitor
 spec:
   replicas: 1
   selector:
     matchLabels: 
-      name: dubbo-demo-service
+      name: dubbo-monitor
   template:
     metadata:
       labels: 
-        app: dubbo-demo-service
-        name: dubbo-demo-service
+        app: dubbo-monitor
+        name: dubbo-monitor
     spec:
       containers:
-      - name: dubbo-demo-service
-        image: harbor.od.com/app/dubbo-demo-service:master_200731_1929
+      - name: dubbo-monitor
+        image: harbor.od.com/infra/dubbo-monitor:latest
         ports:
+        - containerPort: 8080
+          protocol: TCP
         - containerPort: 20880
           protocol: TCP
-        env:
-        - name: JAR_BALL
-          value: dubbo-server.jar
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
       - name: harbor
