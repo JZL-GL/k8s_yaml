@@ -1,34 +1,36 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: dubbo-demo-consumer
-  namespace: app
+  name: apollo-configservice
+  namespace: test
   labels: 
-    name: dubbo-demo-consumer
+    name: apollo-configservice
 spec:
   replicas: 1
   selector:
     matchLabels: 
-      name: dubbo-demo-consumer
+      name: apollo-configservice
   template:
     metadata:
       labels: 
-        app: dubbo-demo-consumer
-        name: dubbo-demo-consumer
+        app: apollo-configservice 
+        name: apollo-configservice
     spec:
+      volumes:
+      - name: configmap-volume
+        configMap:
+          name: apollo-configservice-cm
       containers:
-      - name: dubbo-demo-consumer
-        image: harbor.od.com/app/dubbo-demo-consumer:apollo_200803_1118
+      - name: apollo-configservice
+        image: harbor.od.com/infra/apollo-configservice:v1.5.1
         ports:
         - containerPort: 8080
           protocol: TCP
-        - containerPort: 20880
-          protocol: TCP
-        env:
-        - name: JAR_BALL
-          value: dubbo-client.jar
-        - name: C_OPTS
-          value: -Denv=dev -Dapollo.meta=http://config.od.com
+        volumeMounts:
+        - name: configmap-volume
+          mountPath: /apollo-configservice/config
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
       - name: harbor

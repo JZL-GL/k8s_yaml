@@ -18,13 +18,15 @@ spec:
     spec:
       containers:
       - name: dubbo-demo-service
-        image: harbor.od.com/app/dubbo-demo-service:master_200731_1929
+        image: harbor.od.com/app/dubbo-demo-service:apollo_200803_1148
         ports:
         - containerPort: 20880
           protocol: TCP
         env:
         - name: JAR_BALL
           value: dubbo-server.jar
+        - name: C_OPTS
+          value: -Denv=dev -Dapollo.meta=http://config.od.com
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
       - name: harbor

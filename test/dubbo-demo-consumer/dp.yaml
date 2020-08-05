@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: dubbo-demo-consumer
-  namespace: app
+  namespace: test
   labels: 
     name: dubbo-demo-consumer
 spec:
@@ -28,7 +28,7 @@ spec:
         - name: JAR_BALL
           value: dubbo-client.jar
         - name: C_OPTS
-          value: -Denv=dev -Dapollo.meta=http://config.od.com
+          value: -Denv=fat -Dapollo.meta=http://config-test.od.com
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
       - name: harbor
