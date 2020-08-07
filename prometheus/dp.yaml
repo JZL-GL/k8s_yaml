@@ -24,9 +24,10 @@ spec:
       labels:
         app: prometheus
     spec:
+      nodeName: hdss7-21.host.com
       containers:
       - name: prometheus
-        image: harbor.od.com/infra/prometheus:v2.12.0
+        image: harbor.od.com/infra/prometheus:v2.14.0
         imagePullPolicy: IfNotPresent
         command:
         - /bin/prometheus
